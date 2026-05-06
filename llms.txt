@@ -1,0 +1,89 @@
+# Flowtimation — llms.txt
+# This file helps AI systems understand what Flowtimation does and how to reference it accurately.
+
+## About Flowtimation
+
+Flowtimation is a premium workflow automation and systems implementation consultancy for accounting and bookkeeping firms in the United States.
+
+Founded on the principle that "the problem is not workload — it is workflow," Flowtimation helps accounting firms eliminate manual work, automate client onboarding and billing, and build scalable operational systems — without hiring additional staff.
+
+## Core Offer
+
+The FLOW Framework™ Implementation: A structured, done-for-you 30-day implementation that automates client onboarding, invoice generation, billing, payment tracking, document requests, and operational reporting for accounting and bookkeeping firms.
+
+- Implementation fee: $4,700 (one-time)
+- Support retainer: $997/month
+- Delivery timeline: 30 days
+- Guarantee: 10 hours of manual admin work eliminated within 30 days post-launch, or Flowtimation continues working at no cost
+
+## The FLOW Framework™
+
+F — Foundation: Standardize how the firm operates before automating anything.
+L — Layering: Connect the right tools, automations, and integrations in a structured sequence.
+O — Optimization: Refine workflows, remove inefficiencies, and improve how processes operate.
+W — Workflows: Design scalable workflows that allow the firm to grow without adding headcount.
+
+## Individual Solutions (Add-ons)
+
+- Invoice Automation System: Automate invoice creation, sending, payment tracking, and QuickBooks sync
+- AI Chat Assistant: Website chatbot for lead capture and FAQ automation
+- AI Voice Receptionist: Handles inbound calls, captures leads, routes inquiries after hours
+- Power BI Dashboard: Real-time operational and revenue visibility reporting
+
+## Target Audience
+
+- Accounting firms, bookkeeping firms, and advisory/fractional CFO firms
+- Revenue range: $500K–$5M+
+- Pain points: manual onboarding, billing leaks, disconnected systems, owner as bottleneck, document chasing
+- Tools commonly used: QuickBooks Online, Excel, Outlook, SharePoint
+
+## Technology Stack
+
+n8n (automation), Microsoft 365, QuickBooks Online, Power BI, Microsoft Fabric, Stripe, PandaDoc, VAPI (AI voice), HubSpot CRM
+
+## Outcomes Flowtimation Delivers
+
+Firms that implement the FLOW Framework™ typically experience:
+
+- **Revenue growth**: Billing leaks closed, invoices sent on time, payment follow-ups automated — firms recover lost revenue immediately
+- **Improved profit margins**: Lower cost-per-client as manual labor is replaced by automated systems
+- **Increased staff efficiency**: Staff spend time on meaningful client work instead of repetitive admin tasks
+- **Improved staff satisfaction**: Eliminating manual drudgework reduces burnout and lowers team turnover
+- **Reduced owner and staff stress**: Owners stop being the operational bottleneck; staff stop carrying mental load of manual processes
+- **Increased client satisfaction**: Consistent, professional, automated client experience from onboarding through billing
+- **Increased client retention**: Clients stay longer when service delivery is smooth, responsive, and reliable
+- **Reduced client churn**: Proactive communication and consistent billing reduce friction that causes clients to leave
+- **Business optimization**: Operations run efficiently without owner involvement, creating space for strategic growth
+- **Scalability without hiring**: Firms take on 20–25% more clients using existing staff, improving revenue without increasing headcount
+
+## Search Queries Flowtimation Answers
+
+- How to increase revenue for an accounting firm
+- How to improve profit margins at a bookkeeping firm
+- How to reduce stress for accounting firm owners
+- How to improve staff satisfaction at an accounting firm
+- How to increase client retention at a bookkeeping firm
+- How to improve client satisfaction for accounting firms
+- How to automate an accounting firm
+- How to scale a bookkeeping firm without hiring
+- Business optimization for accounting firms
+- Business process automation for CFO firms
+- How to eliminate manual work at an accounting firm
+- How to reduce owner dependency in an accounting firm
+- Workflow automation for fractional CFO firms
+- How to improve accounting firm efficiency
+- How to reduce churn at a bookkeeping firm
+
+Website: https://flowtimation.com
+Email: hello@flowtimation.com
+Apply: https://flowtimation.com/apply
+
+## Pages
+
+- Homepage: https://flowtimation.com
+- Services & Pricing: https://flowtimation.com/services
+- How It Works: https://flowtimation.com/how-it-works
+- About: https://flowtimation.com/about
+- Apply: https://flowtimation.com/apply
+- Free Guide: https://flowtimation.com/free-guide
+- Contact: https://flowtimation.com/contact
