@@ -63,6 +63,9 @@
   .checkbox-item, .radio-item { display: flex; align-items: flex-start; gap: 10px; cursor: pointer; }
   .checkbox-item input, .radio-item input { width: 16px; height: 16px; margin-top: 1px; accent-color: #8C3293; flex-shrink: 0; cursor: pointer; }
   .checkbox-label, .radio-label { font-size: 13px; color: rgba(255,255,255,0.6); line-height: 1.4; }
+  .form-input.invalid { border-color: rgba(194,42,255,0.6) !important; background: rgba(194,42,255,0.05) !important; }
+  .field-error { font-size: 11px; color: rgba(194,42,255,0.85); margin-top: 2px; display: none; }
+  .field-error.visible { display: block; }
   .submit-btn { font-family: 'Inter', sans-serif; font-size: 15px; font-weight: 600; padding: 15px; border-radius: 10px; background: linear-gradient(135deg, #C22AFF, #8C3293); color: white; border: none; cursor: pointer; width: 100%; margin-top: 2rem; transition: opacity 0.15s; }
   .submit-btn:hover { opacity: 0.9; }
   .submit-note { font-size: 12px; color: rgba(255,255,255,0.25); margin-top: 10px; line-height: 1.5; text-align: center; }
@@ -157,11 +160,13 @@
         <div class="form-row">
           <div class="form-group">
             <label class="form-label">Full name<span class="req">*</span></label>
-            <input type="text" name="name" class="form-input" placeholder="Jane Smith" required>
+            <input type="text" name="name" id="a-name" class="form-input" placeholder="Jane Smith" required>
+            <span class="field-error" id="err-a-name">Please enter your name.</span>
           </div>
           <div class="form-group">
             <label class="form-label">Business email<span class="req">*</span></label>
-            <input type="email" name="email" class="form-input" placeholder="jane@yourfirm.com" required>
+            <input type="email" name="email" id="a-email" class="form-input" placeholder="jane@yourfirm.com" required>
+            <span class="field-error" id="err-a-email">Please enter a valid email address.</span>
           </div>
           <div class="form-group">
             <label class="form-label">Phone number</label>
@@ -171,11 +176,12 @@
         <div class="form-row">
           <div class="form-group">
             <label class="form-label">Firm name<span class="req">*</span></label>
-            <input type="text" name="firm_name" class="form-input" placeholder="Smith Advisory LLC" required>
+            <input type="text" name="firm_name" id="a-firm" class="form-input" placeholder="Smith Advisory LLC" required>
+            <span class="field-error" id="err-a-firm">Please enter your firm name.</span>
           </div>
           <div class="form-group">
             <label class="form-label">Your role<span class="req">*</span></label>
-            <select name="role" class="form-input" required>
+            <select name="role" id="a-role" class="form-input" required>
               <option value="" disabled selected>Select your role</option>
               <option>Owner / Founder</option>
               <option>Managing Partner</option>
@@ -183,6 +189,7 @@
               <option>Operations Manager</option>
               <option>Other</option>
             </select>
+            <span class="field-error" id="err-a-role">Please select your role.</span>
           </div>
         </div>
       </div>
@@ -193,7 +200,7 @@
         <div class="form-row">
           <div class="form-group">
             <label class="form-label">Type of firm<span class="req">*</span></label>
-            <select name="firm_type" class="form-input" required onchange="toggleOtherFirm(this)">
+            <select name="firm_type" id="a-firm-type" class="form-input" required onchange="toggleOtherFirm(this)">
               <option value="" disabled selected>Select firm type</option>
               <option>Accounting firm</option>
               <option>Bookkeeping firm</option>
@@ -202,6 +209,7 @@
               <option>Multi-service firm</option>
               <option>Other</option>
             </select>
+            <span class="field-error" id="err-a-firm-type">Please select your firm type.</span>
           </div>
           <div class="form-group" id="otherFirmGroup" style="display:none;">
             <label class="form-label">Please specify<span class="req">*</span></label>
@@ -209,7 +217,7 @@
           </div>
           <div class="form-group" id="revenueGroup">
             <label class="form-label">Annual revenue<span class="req">*</span></label>
-            <select name="revenue" class="form-input" required>
+            <select name="revenue" id="a-revenue" class="form-input" required>
               <option value="" disabled selected>Select range</option>
               <option>Under $250K</option>
               <option>$250K – $500K</option>
@@ -218,6 +226,7 @@
               <option>$3M – $5M</option>
               <option>$5M+</option>
             </select>
+            <span class="field-error" id="err-a-revenue">Please select your annual revenue.</span>
           </div>
         </div>
         <div class="form-row">
@@ -367,7 +376,8 @@
         <div class="form-row full" style="margin-top:1rem;">
           <div class="form-group">
             <label class="form-label">Describe the one thing that, if fixed, would make the biggest difference right now<span class="req">*</span></label>
-            <textarea name="biggest_issue" class="form-input" placeholder="Be as specific as you can — the more context you give us, the better we can help." required></textarea>
+            <textarea name="biggest_issue" id="a-biggest-issue" class="form-input" placeholder="Be as specific as you can — the more context you give us, the better we can help." required></textarea>
+            <span class="field-error" id="err-a-biggest-issue">Please describe your biggest issue.</span>
           </div>
         </div>
       </div>
@@ -439,24 +449,66 @@
     <script>
     const APPLY_WEBHOOK_URL = 'https://flowtimation.app.n8n.cloud/webhook/6db0f7b9-2f4f-4d4a-90c8-e4f1660cd68f';
 
+    function setErr(fieldId, errId, show) {
+      const field = document.getElementById(fieldId);
+      const msg   = document.getElementById(errId);
+      if (!field || !msg) return;
+      if (show) { field.classList.add('invalid'); msg.classList.add('visible'); }
+      else      { field.classList.remove('invalid'); msg.classList.remove('visible'); }
+    }
+
+    // Clear errors on interaction
+    [
+      ['a-name','err-a-name'], ['a-email','err-a-email'], ['a-firm','err-a-firm'],
+      ['a-role','err-a-role'], ['a-firm-type','err-a-firm-type'], ['a-revenue','err-a-revenue'],
+      ['a-biggest-issue','err-a-biggest-issue']
+    ].forEach(([fId, eId]) => {
+      const el = document.getElementById(fId);
+      if (el) el.addEventListener('input', () => setErr(fId, eId, false));
+      if (el && (el.tagName === 'SELECT')) el.addEventListener('change', () => setErr(fId, eId, false));
+    });
+
     document.getElementById('applyForm').addEventListener('submit', async function(e) {
       e.preventDefault();
 
-      const btn  = document.getElementById('apply-submit-btn');
-      const note = document.getElementById('apply-submit-note');
-      const err  = document.getElementById('apply-form-error');
+      const btn = document.getElementById('apply-submit-btn');
+      const err = document.getElementById('apply-form-error');
+
+      // Validate
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      const checks = [
+        ['a-name',          'err-a-name',          v => v.trim() !== ''],
+        ['a-email',         'err-a-email',          v => emailRegex.test(v.trim())],
+        ['a-firm',          'err-a-firm',           v => v.trim() !== ''],
+        ['a-role',          'err-a-role',           v => v !== ''],
+        ['a-firm-type',     'err-a-firm-type',      v => v !== ''],
+        ['a-revenue',       'err-a-revenue',        v => v !== ''],
+        ['a-biggest-issue', 'err-a-biggest-issue',  v => v.trim() !== ''],
+      ];
+
+      let valid = true;
+      checks.forEach(([fId, eId, test]) => {
+        const el = document.getElementById(fId);
+        const fail = !el || !test(el.value);
+        setErr(fId, eId, fail);
+        if (fail) valid = false;
+      });
+
+      if (!valid) {
+        const firstInvalid = document.querySelector('#applyForm .form-input.invalid');
+        if (firstInvalid) firstInvalid.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        return;
+      }
 
       btn.disabled = true;
       btn.textContent = 'Submitting…';
       btn.style.opacity = '0.7';
       err.style.display = 'none';
 
-      // Collect all named form fields into an object
       const formData = new FormData(this);
       const data = { source: 'apply-form', submitted_at: new Date().toISOString() };
       formData.forEach((value, key) => { data[key] = value; });
 
-      // Collect checkboxes (multi-select fields return multiple values)
       const checkboxGroups = {};
       this.querySelectorAll('input[type="checkbox"]:checked').forEach(cb => {
         if (!checkboxGroups[cb.name]) checkboxGroups[cb.name] = [];
@@ -470,7 +522,6 @@
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(data)
         });
-
         if (res.ok) {
           window.location.href = 'apply-success.html';
         } else {
