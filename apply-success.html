@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/png" href="favicon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flowtimation — Application Received</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Inter', sans-serif; background: #0F0A14; color: white; min-height: 100vh; display: flex; flex-direction: column; -webkit-font-smoothing: antialiased; }
+  .nav { display: flex; align-items: center; justify-content: space-between; padding: 1.25rem 3rem; border-bottom: 0.5px solid rgba(255,255,255,0.08); }
+  .nav-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+  .nav-brand-icon { width: 34px; height: 34px; object-fit: contain; mix-blend-mode: screen; }
+  .nav-logo { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 18px; font-weight: 700; letter-spacing: -0.02em; background: linear-gradient(135deg, #C22AFF, #71C8B4); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .main { flex: 1; display: flex; align-items: center; justify-content: center; padding: 4rem 2rem; }
+  .card { max-width: 560px; width: 100%; text-align: center; }
+  .icon-wrap { width: 80px; height: 80px; border-radius: 50%; background: rgba(0,148,146,0.15); border: 1.5px solid rgba(113,200,180,0.3); display: flex; align-items: center; justify-content: center; margin: 0 auto 2rem; }
+  .icon-wrap svg { width: 36px; height: 36px; }
+  .eyebrow { font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #71C8B4; margin-bottom: 1rem; }
+  h1 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 32px; font-weight: 800; letter-spacing: -0.02em; color: white; margin-bottom: 1rem; line-height: 1.2; }
+  .grad { background: linear-gradient(135deg, #C22AFF, #71C8B4); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  p { font-size: 15px; color: rgba(255,255,255,0.5); line-height: 1.75; margin-bottom: 1rem; }
+  .what-next { background: rgba(255,255,255,0.03); border: 0.5px solid rgba(255,255,255,0.08); border-radius: 14px; padding: 1.5rem; margin: 2rem 0; text-align: left; }
+  .wn-title { font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-bottom: 1rem; }
+  .wn-step { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px; }
+  .wn-num { width: 22px; height: 22px; border-radius: 50%; background: rgba(194,42,255,0.15); border: 0.5px solid rgba(194,42,255,0.25); display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; color: #C22AFF; flex-shrink: 0; margin-top: 1px; }
+  .wn-text { font-size: 13px; color: rgba(255,255,255,0.6); line-height: 1.5; }
+  .btn { display: inline-block; font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 600; padding: 12px 28px; border-radius: 10px; background: #8C3293; color: white; text-decoration: none; transition: background 0.15s; }
+  .btn:hover { background: #A03AA6; }
+  .btn-ghost { background: transparent; border: 1.5px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.65); margin-left: 12px; }
+  .btn-ghost:hover { border-color: rgba(255,255,255,0.4); color: white; background: transparent; }
+  @media (max-width: 480px) { .nav { padding: 1rem 1.5rem; } h1 { font-size: 26px; } .btn, .btn-ghost { display: block; margin: 0 0 12px 0; text-align: center; } }
+</style>
+</head>
+<body>
+<nav class="nav">
+  <a href="index.html" class="nav-brand">
+    <img class="nav-brand-icon" src="logo.png" alt="Flowtimation">
+    <div class="nav-logo">Flowtimation</div>
+  </a>
+</nav>
+<div class="main">
+  <div class="card">
+    <div class="icon-wrap">
+      <svg viewBox="0 0 36 36" fill="none"><circle cx="18" cy="18" r="16" stroke="#71C8B4" stroke-width="1.5"/><path d="M11 18l5 5 9-9" stroke="#71C8B4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+    <div class="eyebrow">Application received</div>
+    <h1>We've got it.<br><span class="grad">Talk soon.</span></h1>
+    <p>Your application has been submitted. We review every submission personally — you'll hear from us within <strong style="color:rgba(255,255,255,0.8);">2 business days</strong>.</p>
+    <p>In the meantime, feel free to explore how the FLOW Framework™ works or review what's included in the implementation.</p>
+    <div class="what-next">
+      <div class="wn-title">What happens next</div>
+      <div class="wn-step"><div class="wn-num">1</div><div class="wn-text">We review your application and assess fit based on your firm type, tools, and situation.</div></div>
+      <div class="wn-step"><div class="wn-num">2</div><div class="wn-text">If it looks like a strong fit, we'll follow up via email within 2 business days to confirm details.</div></div>
+      <div class="wn-step"><div class="wn-num">3</div><div class="wn-text">We'll schedule a focused onboarding call to map your workflows and finalize the implementation plan.</div></div>
+    </div>
+    <a href="how-it-works.html" class="btn">See how it works</a>
+    <a href="index.html" class="btn btn-ghost">Back to home</a>
+  </div>
+</div>
+</body>
+</html>

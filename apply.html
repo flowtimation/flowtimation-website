@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<link rel="icon" type="image/png" href="favicon.png">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Apply to Work with Flowtimation | Accounting Firm Automation</title>
 <meta name="description" content="Apply to work with Flowtimation. We help accounting, bookkeeping, and CFO firms boost revenue, improve profit margins, increase client retention, reduce staff stress, and build systems that scale — without adding headcount.">
@@ -32,7 +33,7 @@
   .nav-cta:hover { background: #A03AA6; }
   .nav-hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
   .nav-hamburger span { width: 22px; height: 1.5px; background: rgba(255,255,255,0.7); border-radius: 2px; display: block; }
-  .nav-mobile { display: none; flex-direction: column; background: #150e1e; border-bottom: 0.5px solid rgba(255,255,255,0.08); padding: 1rem 1.5rem 1.5rem; }
+  .nav-mobile { display: none; flex-direction: column; background: #150e1e; border-bottom: 0.5px solid rgba(255,255,255,0.08); padding: 1rem 1.5rem 1.5rem; position: sticky; top: 57px; z-index: 99; }
   .nav-mobile.open { display: flex; }
   .nav-mobile .nav-link { padding: 0.75rem 0; border-bottom: 0.5px solid rgba(255,255,255,0.06); font-size: 15px; display: block; }
   .nav-mobile .nav-cta { margin-top: 1rem; text-align: center; padding: 12px; border-radius: 10px; font-size: 14px; display: block; }
@@ -148,9 +149,7 @@
   </div>
 
   <div class="form-card">
-    <form action="https://flowtimation.app.n8n.cloud/webhook/6db0f7b9-2f4f-4d4a-90c8-e4f1660cd68f" method="POST" id="applyForm">
-      <input type="hidden" name="_next" value="apply-success.html">
-      <input type="hidden" name="_subject" value="New Flowtimation Application">
+    <form id="applyForm">
 
       <!-- SECTION 1: ABOUT YOU -->
       <div class="form-section">
@@ -411,6 +410,8 @@
               <option>Google search</option>
               <option>Referral from someone I know</option>
               <option>Facebook group or community</option>
+              <option>AI Chatbot</option>
+              <option>WorkflowCon</option>
               <option>Other</option>
             </select>
           </div>
@@ -427,12 +428,63 @@
         </div>
       </div>
 
-      <button type="submit" class="submit-btn">Submit Application</button>
-      <div class="submit-note">We review every application personally and respond within 2 business days.<br>Submitting this form does not commit you to anything.</div>
+      <button type="submit" class="submit-btn" id="apply-submit-btn">Submit Application</button>
+      <div class="submit-note" id="apply-submit-note">We review every application personally and respond within 2 business days.<br>Submitting this form does not commit you to anything.</div>
+      <div id="apply-form-error" style="display:none; margin-top:1.25rem; padding:1rem 1.25rem; background:rgba(194,42,255,0.06); border:0.5px solid rgba(194,42,255,0.2); border-radius:10px; font-size:13px; color:rgba(255,255,255,0.6); line-height:1.6;">
+        Something went wrong — please try again or email us at <a href="mailto:hello@flowtimation.com" style="color:#71C8B4;">hello@flowtimation.com</a>
+      </div>
 
     </form>
 
     <script>
+    const APPLY_WEBHOOK_URL = 'https://flowtimation.app.n8n.cloud/webhook/6db0f7b9-2f4f-4d4a-90c8-e4f1660cd68f';
+
+    document.getElementById('applyForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+
+      const btn  = document.getElementById('apply-submit-btn');
+      const note = document.getElementById('apply-submit-note');
+      const err  = document.getElementById('apply-form-error');
+
+      btn.disabled = true;
+      btn.textContent = 'Submitting…';
+      btn.style.opacity = '0.7';
+      err.style.display = 'none';
+
+      // Collect all named form fields into an object
+      const formData = new FormData(this);
+      const data = { source: 'apply-form', submitted_at: new Date().toISOString() };
+      formData.forEach((value, key) => { data[key] = value; });
+
+      // Collect checkboxes (multi-select fields return multiple values)
+      const checkboxGroups = {};
+      this.querySelectorAll('input[type="checkbox"]:checked').forEach(cb => {
+        if (!checkboxGroups[cb.name]) checkboxGroups[cb.name] = [];
+        checkboxGroups[cb.name].push(cb.value);
+      });
+      Object.assign(data, checkboxGroups);
+
+      try {
+        const res = await fetch(APPLY_WEBHOOK_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+
+        if (res.ok) {
+          window.location.href = 'apply-success.html';
+        } else {
+          throw new Error('Non-OK response: ' + res.status);
+        }
+      } catch (error) {
+        console.error('Apply form error:', error);
+        err.style.display = 'block';
+        btn.disabled = false;
+        btn.textContent = 'Submit Application';
+        btn.style.opacity = '1';
+      }
+    });
+
     function toggleOtherFirm(sel) {
       const g = document.getElementById('otherFirmGroup');
       const input = document.getElementById('firmTypeOther');

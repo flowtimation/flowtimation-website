@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<link rel="icon" type="image/png" href="favicon.png">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Contact Flowtimation | Accounting & Bookkeeping Automation Consultant</title>
 <meta name="description" content="Get in touch with Flowtimation — workflow automation and business optimization consultancy for accounting, bookkeeping, and CFO firms. Questions about boosting revenue, improving margins, or reducing operational stress? We'd love to hear from you.">
@@ -32,7 +33,7 @@
   .nav-cta:hover { background: #A03AA6; }
   .nav-hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
   .nav-hamburger span { width: 22px; height: 1.5px; background: rgba(255,255,255,0.7); border-radius: 2px; display: block; }
-  .nav-mobile { display: none; flex-direction: column; background: #150e1e; border-bottom: 0.5px solid rgba(255,255,255,0.08); padding: 1rem 1.5rem 1.5rem; }
+  .nav-mobile { display: none; flex-direction: column; background: #150e1e; border-bottom: 0.5px solid rgba(255,255,255,0.08); padding: 1rem 1.5rem 1.5rem; position: sticky; top: 57px; z-index: 99; }
   .nav-mobile.open { display: flex; }
   .nav-mobile .nav-link { padding: 0.75rem 0; border-bottom: 0.5px solid rgba(255,255,255,0.06); font-size: 15px; display: block; }
   .nav-mobile .nav-cta { margin-top: 1rem; text-align: center; padding: 12px; border-radius: 10px; font-size: 14px; display: block; }
@@ -197,9 +198,7 @@
     <div class="form-card">
       <div class="form-card-title">Send us a message</div>
       <div class="form-card-sub">Not ready to apply yet? Ask us anything — we're happy to help you figure out if Flowtimation is the right fit.</div>
-      <form action="https://formspree.io/f/REPLACE_WITH_CONTACT_FORM_ID" method="POST">
-        <input type="hidden" name="_next" value="contact-success.html">
-        <input type="hidden" name="_subject" value="New Flowtimation Contact Message">
+      <form id="contact-form">
         <div class="form-row">
           <div class="form-group">
             <label class="form-label">Your name<span class="req">*</span></label>
@@ -217,7 +216,7 @@
           </div>
           <div class="form-group">
             <label class="form-label">Reason for contact</label>
-            <select class="form-input">
+            <select name="reason" class="form-input">
               <option value="" disabled selected>Select one</option>
               <option>General question about services</option>
               <option>Question about pricing</option>
@@ -233,9 +232,67 @@
             <textarea name="message" class="form-input" placeholder="Tell us what's on your mind — the more context you can share, the better we can help." required></textarea>
           </div>
         </div>
-        <button type="submit" class="submit-btn">Send Message</button>
-        <div class="submit-note">We read every message and respond within 2 business days.</div>
+        <button type="submit" class="submit-btn" id="submit-btn">Send Message</button>
+        <div class="submit-note" id="submit-note">We read every message and respond within 2 business days.</div>
+        <div id="form-success" style="display:none; margin-top:1.25rem; padding:1rem 1.25rem; background:rgba(65,178,165,0.08); border:0.5px solid rgba(65,178,165,0.25); border-radius:10px; font-size:13px; color:#71C8B4; line-height:1.6;">
+          ✓ Message sent — we'll get back to you within 2 business days.
+        </div>
+        <div id="form-error" style="display:none; margin-top:1.25rem; padding:1rem 1.25rem; background:rgba(194,42,255,0.06); border:0.5px solid rgba(194,42,255,0.2); border-radius:10px; font-size:13px; color:rgba(255,255,255,0.6); line-height:1.6;">
+          Something went wrong — please try again or email us at <a href="mailto:hello@flowtimation.com" style="color:#71C8B4;">hello@flowtimation.com</a>
+        </div>
       </form>
+
+      <script>
+        // ── Webhook URLs ────────────────────────────────────────────
+        const WEBHOOK_URL = 'https://flowtimation.app.n8n.cloud/webhook/941a3b38-8cdf-406c-ae90-823ca6b8e6e7';
+        // ────────────────────────────────────────────────────────────
+
+        document.getElementById('contact-form').addEventListener('submit', async function(e) {
+          e.preventDefault();
+
+          const btn  = document.getElementById('submit-btn');
+          const note = document.getElementById('submit-note');
+          const ok   = document.getElementById('form-success');
+          const err  = document.getElementById('form-error');
+
+          // Loading state
+          btn.disabled = true;
+          btn.textContent = 'Sending…';
+          btn.style.opacity = '0.7';
+          ok.style.display = 'none';
+          err.style.display = 'none';
+
+          const data = {
+            name:      this.name.value.trim(),
+            email:     this.email.value.trim(),
+            firm:      this.firm.value.trim(),
+            reason:    this.reason.value,
+            message:   this.message.value.trim(),
+            source:    'contact-form',
+            submitted_at: new Date().toISOString()
+          };
+
+          try {
+            const res = await fetch(WEBHOOK_URL, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(data)
+            });
+
+            if (res.ok) {
+              window.location.href = 'contact-success.html';
+            } else {
+              throw new Error('Non-OK response: ' + res.status);
+            }
+          } catch (error) {
+            console.error('Contact form error:', error);
+            err.style.display = 'block';
+            btn.disabled = false;
+            btn.textContent = 'Send Message';
+            btn.style.opacity = '1';
+          }
+        });
+      </script>
     </div>
   </div>
 
